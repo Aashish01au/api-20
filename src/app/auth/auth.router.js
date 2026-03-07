@@ -1,0 +1,11 @@
+const { ROLES } = require("../constant/constant")
+const auth = require("../middleware/auth.middleware")
+const checkRoles = require("../middleware/rbac.middleware")
+const uploader = require("../middleware/uploader.middleware")
+const bodyValidator = require("../middleware/validator.middleware")
+const authCtrl = require("./auth.controller")
+const { registerSchema, verifyOtpSchema } = require("./auth.request")
+const authRouter = require("express").Router()
+authRouter.post("/register",uploader.single("profile"),bodyValidator(registerSchema,"profile"),authCtrl.register)
+authRouter.post("/verify-otp",bodyValidator(verifyOtpSchema),authCtrl.verifyOtp)
+module.exports= authRouter
