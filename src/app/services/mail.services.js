@@ -13,6 +13,7 @@ class MailServices {
                 }
             })
         } catch (exception) {
+            console.log("MailConnection : ", exception)
             throw{code:500, message:"Error  Connecting SMTP Server!!!"}
         }
     }
@@ -28,6 +29,7 @@ class MailServices {
             })
             return response
         } catch (exception) {
+            console.log("EmailSendError : ", exception)
             throw {code:500,message:"Error Sending Mail..."}
         }
     }

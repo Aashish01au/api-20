@@ -7,5 +7,5 @@ const authCtrl = require("./auth.controller")
 const { registerSchema, verifyOtpSchema } = require("./auth.request")
 const authRouter = require("express").Router()
 authRouter.post("/register",uploader.single("profile"),bodyValidator(registerSchema,"profile"),authCtrl.register)
-authRouter.post("/verify-otp",bodyValidator(verifyOtpSchema),authCtrl.verifyOtp)
+authRouter.post("/verify-otp",bodyValidator(verifyOtpSchema),authCtrl.verifyOTP)
 module.exports= authRouter
