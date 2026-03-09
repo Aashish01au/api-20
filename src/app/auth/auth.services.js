@@ -43,6 +43,19 @@ class AuthServices {
             throw exception
         }
     }
+    resendOtpMail = async (to,name,otp)=>{
+        try {
+            const response = await mailSvc.sendEmail(to,"USer Regiter",`
+            <h1>Dear ${name}</h1> <br>
+            <h1>your resend otp token  :  ${otp}</h1> <br>
+            <h1>your token will be expird in 2 hrs</h1> <br>
+            <h1>Thanking you</h1> <br>
+            `)
+            return response
+        } catch (exception) {
+         throw exception   
+        }
+    }
     verifyOtp = async ({email,otp})=>{
         try {
             const user = await UserModel.findOne({
@@ -60,6 +73,14 @@ class AuthServices {
             $set:data
         })
         return user
+        } catch (exception) {
+            throw exception
+        }
+    }
+    getSingleUserByFilter = async (filter)=>{
+        try {
+            const user = await UserModel.findOne(filter)
+            return user
         } catch (exception) {
             throw exception
         }

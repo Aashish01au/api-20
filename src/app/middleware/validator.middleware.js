@@ -7,12 +7,11 @@ const bodyValidator = (schema) =>{
           await  schema.validateAsync(data)
           next()
         } catch (exception) {
-         //   console.log("-",exception.details[0].context,"-")
+          console.log(exception)
            const errorBag = {}
            exception.details.map((error)=>{
             errorBag[error.context.label] = error.message
            })
-           console.log("==",errorBag,"==")
            next(new ValidationFailure(data=errorBag))
         }
     }
