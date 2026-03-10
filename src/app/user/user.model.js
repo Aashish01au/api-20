@@ -38,7 +38,7 @@ const UserSchema = new mongoose.Schema({
     password:String,
     expiryTime:Date,
     address:{
-        shippping:addressSchema,
+        shipping:addressSchema,
         billing:addressSchema
     },
     createdBy :{

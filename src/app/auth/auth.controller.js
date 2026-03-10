@@ -180,6 +180,22 @@ class AuthController {
             next(exception)
         }
     }
+    updateuser = async (req,res,next)=>{
+        try {
+        const payload = req.body
+        const file = req.file
+            const formatedData = await authSvc.transformUpdatedUSerData(payload,file )
+            const updatedData = await authSvc.updateUser(req.params.id,formatedData)
+        res.json({
+            result:updatedData,
+            message:"User Updated Successfully",
+            meta:null
+        })
+        } catch (exception) {
+            console.log("UpdateUser : ",exception)
+            next(exception)
+        }
+    }
 }
 const authCtrl =new AuthController()
 module.exports = authCtrl

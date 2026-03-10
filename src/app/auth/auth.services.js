@@ -19,6 +19,17 @@ class AuthServices {
             throw exception
         }
     }
+    transformUpdatedUSerData = (payload, file=null)=>{
+        try {
+            const user = payload
+            if(file){
+                user.profile = file.filename
+            }
+            return user
+        } catch (exception) {
+            throw exception
+        }
+    }
     store = async (data)=>{
         try {
             const user = new UserModel(data)

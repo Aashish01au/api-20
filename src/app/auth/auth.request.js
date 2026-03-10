@@ -19,11 +19,31 @@ const loginUserSchema = Joi.object({
     email:Joi.string().email().required(),
     password:Joi.string().required()
 })
+const addressSchema = Joi.object({
+    stName:Joi.string(),
+    lat:Joi.number(),
+    long:Joi.number(),
+    wardNo:Joi.number(),
+    ruralNo:Joi.string(),
+    district:Joi.string(),
+    state:Joi.string()
+})
+const updateuserSchema = Joi.object({
+    name:Joi.string().min(3),
+    role:Joi.string().regex(/^(admin|seller|customer)$/),
+    status:Joi.string().pattern(/^(active|inactive)$/).default("inactive"),
+    profile:Joi.string(),
+    address:Joi.object({
+        shipping:addressSchema.default(null),
+        billing:addressSchema.default(null)
+    }),
+   })
 
 module.exports = {
     registerSchema,
     verifyOtpSchema,
     passwordSchema,
     resendOtpSchema,
-    loginUserSchema
+    loginUserSchema,
+    updateuserSchema
 }
