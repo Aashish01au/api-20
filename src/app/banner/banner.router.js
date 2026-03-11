@@ -1,0 +1,18 @@
+const { ROLES } = require("../constant/constant")
+const auth = require("../middleware/auth.middleware")
+const permissionCheck = require("../middleware/rbac.middleware")
+const { uploader, uploaderPath } = require("../middleware/uploader.middleware")
+const bodyValidator = require("../middleware/validator.middleware")
+const bannerCtrl = require("./banner.controller")
+const { createBannerSchema } = require("./banner.request")
+const bannerRouter = require("express").Router()
+bannerRouter.get("/home",bannerCtrl.homeList)
+bannerRouter.route("/")
+    .get(auth,permissionCheck(ROLES.ADMIN),bannerCtrl.index)
+    .post(auth,permissionCheck(ROLES.CUSTOMER),uploaderPath("banners"),uploader.single("image"),bodyValidator(createBannerSchema,"image"),bannerCtrl.create)
+bannerRouter.route("/:id")
+    .get(auth,permissionCheck(ROLES.ADMIN),bannerCtrl.getBanner)
+    .put(auth,permissionCheck(ROLES.ADMIN),bannerCtrl.update)
+    .delete(auth,permissionCheck(ROLES.ADMIN),bannerCtrl.delete)
+
+module.exports = bannerRouter

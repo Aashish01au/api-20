@@ -4,7 +4,7 @@ const { randomString } = require("../utilities/helpers")
 const ValidationFailure = require("../exceptions/validationFailure")
 const myStorage = multer.diskStorage({
     destination :(req,file,cb)=>{
-        const path = "./public/uploaders/"
+        const path = "./public/uploaders/"+req.dirName
         if(!fs.existsSync(path)){
             fs.mkdirSync(path,{
                 recursive:true
@@ -33,5 +33,16 @@ const uploader = multer({
         fileSize:2*1024*1024
     }
 })
+const uploaderPath = (dirName)=>{
+    return (req,res,next)=>{
+        try {
+             req.dirName= dirName
+            next()
+        } catch (exception) {
+            console.log("uploaderPath : ",exception)
+            next(exception)
+        }
+    }
+}
 
-module.exports = uploader
+module.exports = {uploader, uploaderPath}
